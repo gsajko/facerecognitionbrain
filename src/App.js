@@ -5,6 +5,7 @@ import FaceRecognition from './components/FaceRecognition/FaceRecognition';
 import Navigation from './components/Navigation/Navigation';
 import Logo from './components/Logo/Logo';
 import Rank from './components/Rank/Rank';
+import Signin from './components/Signin/Signin';
 import ImageLinkForm from './components/ImageLinkForm/ImageLinkForm';
 import './App.css';
 
@@ -31,6 +32,7 @@ class App extends Component {
       input: '',
       imageUrl: '',
       box: '',
+      route: 'signin'
     }
   }
 
@@ -75,12 +77,16 @@ class App extends Component {
         params={particlesOptions}
             />
         <Navigation />
-        <Logo />
-        <Rank />
-
-        <ImageLinkForm 
-          onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/>
-        <FaceRecognition box={this.state.box} imageUrl ={this.state.imageUrl}/>
+        {this.state.route === 'signin'
+          ? <Signin />
+          : <div>
+              <Logo />
+              <Rank />
+              <ImageLinkForm 
+                onInputChange={this.onInputChange} onButtonSubmit={this.onButtonSubmit}/>
+              <FaceRecognition box={this.state.box} imageUrl ={this.state.imageUrl}/>
+           </div>
+        }
       </div>
     );
   }
