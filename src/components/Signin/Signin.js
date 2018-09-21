@@ -15,7 +15,20 @@ class Signin extends React.Component {
         this.setState({signInPassword: event.target.value})
     }
     onSumbitSignIn = () => {
-        console.log(this.state);
+        fetch('http://localhost:3000/signin', {
+            method: 'POST',
+            headers: {'Content-Type':'application/json'},
+            body: JSON.stringify({
+                email: this.state.signInEmail,
+                password: this.state.signInPassword
+            })
+        })
+        .then(response => response.json()
+        .then(data => {
+            if (data === 'success') {
+                this.props.onRouteChange('home');
+            }
+        }))
     }
     render(){
         const {onRouteChange} = this.props;
@@ -31,7 +44,9 @@ class Signin extends React.Component {
                                 className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
                                 type="email" 
                                 name="email-address"  
-                                id="email-address" />
+                                id="email-address"
+                                onChange= {this.onEmailChange}
+                            />
                         </div>
                         <div className="mv3">
                             <label className="db fw6 lh-copy f6" htmlFor="password">Password</label>
@@ -39,12 +54,14 @@ class Signin extends React.Component {
                                 className="b pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
                                 type="password" 
                                 name="password"  
-                                id="password" />
+                                id="password"
+                                onChange= {this.onPasswordChange}
+                            />
                         </div>
                         </fieldset>
                         <div className="">
                         <input 
-                            onClick={() => onRouteChange('home')}
+                            onClick={this.onSumbitSignIn}
                             className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" 
                             type="submit" 
                             value="Sign in" />
