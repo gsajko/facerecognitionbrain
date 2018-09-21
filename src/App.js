@@ -35,6 +35,14 @@ class App extends Component {
       box: '',
       route: 'signin',
       isSignedIn: false,
+      user: {
+        id: '',
+        name: '',
+        email: '',
+        password: '',
+        entries: '',
+        joined:  ''
+      }
     }
   }
 
